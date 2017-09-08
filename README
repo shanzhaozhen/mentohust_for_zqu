@@ -1,3 +1,20 @@
+mentohust_for_zqu
+======
+这是一个针对肇庆学院制作的一个锐捷认证客户端的项目，里面实现了锐捷的v3（v4）算法的认证。
+这个工程的原项目是由hyrathb写的，原地址是https://github.com/hyrathb/mentohust
+我只是针对我学校的认证做了对应的修改。
+在此感谢hyrathb的贡献和ShanQincheng给我的启发
+
+修改思路
+======
+其实没有什么修改思路，我是直接按照ShanQincheng所放出的方法（http://www.codingstory.com.cn/mo-gai-mentohust-v4ban-ben-de-xin-de/）进行对代码修改。
+但是不同的高校可能会有不同的修改方式，我觉得用linux版本认证并对齐抓包这样的成功率会提高很多（因为windows版本的锐捷的V4认证的C语言数组找不出来，好吧只是对我这菜鸡来说）
+对于我学校来说我学校有MAC地址检验，在上面的教程中还缺少了MAC地址的修改。
+v3(v4)对应的数组也是按照上面的教程所做的，有趣的是用WinHex编辑器会发现截取的位置其实就是C语言编译出来的程序部分，所以截取开头的部分会有CPP，末尾部分有return的字眼。
+
+
+原作者原话
+======
 现在updateing实现了一个加载支持修改数据包内容的EAPOL认证客户端并将本工程的认证算法做成了插件，更加容易适配各个学校，建议大家尝试https://github.com/updateing/minieap
 
 完全没怎么看原来的代码，瞎改的。
@@ -5,25 +22,15 @@
 
 所有hash都是从算法在rhash和ampheck借来魔改的……。
 
-建议Arch Linux用户安装AUR中的mentohust-git
+编译
+======
+在linux下安装相应的环境直接执行
+sudo -i(输入密码）
+./autogen.sh
+./configure
+make
 #使用方法
-
-#安装mentohust：建议Ubuntu用户使用Deb包安装，Fedora用户使用RPM包安装
-
-#如果确定自己可以使用xrgsu认证成功，打开终端输入sudo mentohust运行即可
-如果不确定，切换到锐捷所在目录，然后输入以下命令：
-sudo mkdir /etc/mentohust
-sudo cp ./8021x.exe  /etc/mentohust
-sudo cp ./W32N55.dll /etc/mentohust
-然后打开终端输入sudo mentohust运行。如果认证失败，再切换到锐捷所在目录，输入以下命令：
-sudo cp ./SuConfig.dat /etc/mentohust
-然后打开终端输入sudo mentohust运行即可。
-如果准确按以上步骤操作后还是认证失败，请下载MentoHUSTTool，在Windows下抓包并保存为data.mpf，
-然后回到Linux，切换到data.mpf所在目录，输入以下命令：
-sudo cp ./data.mpf /etc/mentohust
-然后打开终端输入sudo mentohust -f/etc/mentohust/data.mpf -w运行即可。以后也只需输入sudo mentohust。
-
-#您也可以按下面的方法操作：
+======
 1、静态IP用户请事先设置好IP；
 2、打开终端，输入sudo mentohust，回车；
 3、［正确］输入相应信息，如果认证成功，跳到第8步；如果提示“不允许使用的客户端类型”，按Ctrl+C结束认证；
