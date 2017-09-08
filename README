@@ -7,7 +7,7 @@ mentohust_for_zqu
 
 修改思路
 ===============
-其实没有什么修改思路，我是直接按照ShanQincheng所放出的方法（http://www.codingstory.com.cn/mo-gai-mentohust-v4ban-ben-de-xin-de/）进行对代码修改。
+其实没有什么修改思路，我是直接按照ShanQincheng所放出的方 http://www.codingstory.com.cn/mo-gai-mentohust-v4ban-ben-de-xin-de  进行对代码修改。
 但是不同的高校可能会有不同的修改方式，我觉得用linux版本认证并对齐抓包这样的成功率会提高很多（因为windows版本的锐捷的V4认证的C语言数组找不出来，好吧只是对我这菜鸡来说）
 对于我学校来说我学校有MAC地址检验，在上面的教程中还缺少了MAC地址的修改。
 v3(v4)对应的数组也是按照上面的教程所做的，有趣的是用WinHex编辑器会发现截取的位置其实就是C语言编译出来的程序部分，所以截取开头的部分会有CPP，末尾部分有return的字眼。
