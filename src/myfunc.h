@@ -23,6 +23,7 @@ void getEchoKey(const u_char *capBuf);	/* 获取EchoKey */
 u_char *checkPass(u_char id, const u_char *md5Seed, int seedLen);	/* 计算密码的md5 */
 void fillCernetAddr(u_char *buf);	/* 填充赛尔网络地址 */
 int isOnline();	/* ping主机判断是否掉线 */
+unsigned char *encodeIP(u_int32_t ip);
 
 #endif
 
