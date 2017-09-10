@@ -290,6 +290,8 @@ static int sendEchoPacket();	/* 发送心跳包 */
 static int sendLogoffPacket();  /* 发送退出包 */
 static int waitEchoPacket();	/* 等候响应包 */
 
+static int sendPacketCount = 0;    /*计算发送的第几组包*/
+
 static void setTimer(unsigned interval) /* 设置定时器 */
 {
 	struct itimerval timer;
@@ -422,6 +424,7 @@ static void fillEtherAddr(u_int32_t protocol)
 
 static int sendStartPacket()
 {
+	sendPacketCount = sendPacketCount + 1;
 	if (startMode%3 == 2)	/* 赛尔 */
 	{
 		if (sendCount == 0)
@@ -442,10 +445,12 @@ static int sendStartPacket()
 		//fillStartPacket();
 		fillEtherAddr(0x888E0101);
 		memcpy(sendPacket + 0x12, pkt_start, sizeof(pkt1));
-
-		memcpy(sendPacket+0x17, encodeIP(ip), 0x04);	//fill IP
-		memcpy(sendPacket+0x1b, encodeIP(mask), 0x04);	//fill mask
-		memcpy(sendPacket+0x1f, encodeIP(gateway), 0x04); //fill gateway
+		if(sendPacketCount % 2 == 0)
+		{
+			memcpy(sendPacket+0x17, encodeIP(ip), 0x04);	//fill IP
+			memcpy(sendPacket+0x1b, encodeIP(mask), 0x04);	//fill mask
+			memcpy(sendPacket+0x1f, encodeIP(gateway), 0x04); //fill gateway
+		}
 
 		memcpy(sendPacket+0x6c, localMAC, 0x6);                //fill MAC
 
@@ -488,9 +493,12 @@ static int sendIdentityPacket()
 		memcpy(sendPacket+0x17, userName, nameLen);
 		memcpy(sendPacket+0x17+nameLen, pkt_identity, sizeof(pkt2));
 
-		memcpy(sendPacket + 0x28, encodeIP(ip), 0x04);	//fill IP
-		memcpy(sendPacket + 0x2c, encodeIP(mask), 0x04);	//fill mask
-		memcpy(sendPacket + 0x30, encodeIP(gateway), 0x04); //fill gateway
+		if(sendPacketCount % 2 == 0)
+		{
+			memcpy(sendPacket + 0x28, encodeIP(ip), 0x04);	//fill IP
+			memcpy(sendPacket + 0x2c, encodeIP(mask), 0x04);	//fill mask
+			memcpy(sendPacket + 0x30, encodeIP(gateway), 0x04); //fill gateway
+		}
 
 		memcpy(sendPacket + 0x7d, localMAC, 0x06);                //fill MAC
 
@@ -535,9 +543,12 @@ static int sendChallengePacket()
 
 		memcpy(sendPacket+0x28+nameLen, pkt_md5, sizeof(pkt3));
 
-		memcpy(sendPacket + 0x39, encodeIP(ip), 0x04);	//fill IP
-		memcpy(sendPacket + 0x3d, encodeIP(mask), 0x04);	//fill mask
-		memcpy(sendPacket + 0x41, encodeIP(gateway), 0x04); //fill gateway
+		if(sendPacketCount % 2 == 0)
+		{
+			memcpy(sendPacket + 0x39, encodeIP(ip), 0x04);	//fill IP
+			memcpy(sendPacket + 0x3d, encodeIP(mask), 0x04);	//fill mask
+			memcpy(sendPacket + 0x41, encodeIP(gateway), 0x04); //fill gateway
+		}
 
 		memcpy(sendPacket + 0x8e, localMAC, 0x06);                //fill MAC
 
