@@ -213,10 +213,15 @@ void initConfig(int argc, char **argv)
 	int daemonMode = D_DAEMONMODE;	/* 是否后台运行 */
 	void customizeServiceName(char* service); /* myconfig.c中用于更改服务名的函数 */
 
-	printf(_("\n欢迎使用MentoHUST\t版本: %s\n"
+	printf(_("\n欢迎使用MentoHUST\t版本: %s(肇庆学院定制版)\n"
 			"Copyright (C) 2009-2010 HustMoon Studio\n"
-			"人到华中大，有甜亦有辣。明德厚学地，求是创新家。\n"
-			"Bug report to %s\n\n"), VERSION, PACKAGE_BUGREPORT);
+			"该版本是由原版本MentoHUST再开发加入V4校验之后再开发的，此处感谢hyrathb提供V4算法\n"
+			"认证原理是linux版本的锐捷抓包分析改包发送，针对本校二次认证自动获取IP的方式修改。\n"
+			"他校测试之前可以先看看学校支不支持linux下的锐捷版本。\n"
+			"该版本依然存在很多Bug，希望各位大佬接盘优化\n"
+			"Bug report to %s\n"
+			"https://github.com/shanzhaozhen/mentohust_for_zqu/issues(本版本请反馈到这里)\n"
+			"交流QQ群：215617688\n\n\n"), VERSION, PACKAGE_BUGREPORT);
 	saveFlag = (readFile(&daemonMode)==0 ? 0 : 1);
 	readArg(argc, argv, &saveFlag, &exitFlag, &daemonMode);
 #ifndef NO_DYLOAD
@@ -741,7 +746,7 @@ static void printConfig()
 	if (dhcpMode != 0)
     {
 		printf(_("** DHCP脚本:\t"));
-        printf("%s/n", dhcpScript);
+        printf("%s\n", dhcpScript);
     }
 }
 
