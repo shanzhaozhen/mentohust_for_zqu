@@ -447,12 +447,12 @@ static int sendStartPacket()
 		memcpy(sendPacket + 0x12, pkt_start, sizeof(pkt1));
 		if(sendPacketCount % 2 == 0)
 		{
-			memcpy(sendPacket+0x17, encodeIP(ip), 0x04);	//fill IP
-			memcpy(sendPacket+0x1b, encodeIP(mask), 0x04);	//fill mask
-			memcpy(sendPacket+0x1f, encodeIP(gateway), 0x04); //fill gateway
+			memcpy(sendPacket + 0x17, encodeIP(ip), 0x04);	//fill IP
+			memcpy(sendPacket + 0x1b, encodeIP(mask), 0x04);	//fill mask
+			memcpy(sendPacket + 0x1f, encodeIP(gateway), 0x04); //fill gateway
 		}
 
-		memcpy(sendPacket+0x6c, localMAC, 0x6);                //fill MAC
+		memcpy(sendPacket + 0x6c, localMAC, 0x6);                //fill MAC
 
 		memcpy(sendPacket + 0xe2, computeV4(pad, 16), 0x80);
 		setTimer(timeout);
@@ -490,19 +490,19 @@ static int sendIdentityPacket()
 		sendPacket[0x12] = 0x02;
 		sendPacket[0x13] = capBuf[0x13];
 		sendPacket[0x16] = 0x01;
-		memcpy(sendPacket+0x17, userName, nameLen);
-		memcpy(sendPacket+0x17+nameLen, pkt_identity, sizeof(pkt2));
+		memcpy(sendPacket + 0x17, userName, nameLen);
+		memcpy(sendPacket + 0x17 + nameLen, pkt_identity, sizeof(pkt2));
 
 		if(sendPacketCount % 2 == 0)
 		{
-			memcpy(sendPacket + 0x28, encodeIP(ip), 0x04);	//fill IP
-			memcpy(sendPacket + 0x2c, encodeIP(mask), 0x04);	//fill mask
-			memcpy(sendPacket + 0x30, encodeIP(gateway), 0x04); //fill gateway
+			memcpy(sendPacket + 0x1c + nameLen, encodeIP(ip), 0x04);	//fill IP
+			memcpy(sendPacket + 0x20 + nameLen, encodeIP(mask), 0x04);	//fill mask
+			memcpy(sendPacket + 0x24 + nameLen, encodeIP(gateway), 0x04); //fill gateway
 		}
 
-		memcpy(sendPacket + 0x7d, localMAC, 0x06);                //fill MAC
+		memcpy(sendPacket + 0x71 + nameLen, localMAC, 0x06);                //fill MAC
 
-		memcpy(sendPacket + 0xf3, computeV4(pad, 16), 0x80);
+		memcpy(sendPacket + 0xe7 + nameLen, computeV4(pad, 16), 0x80);
 		setTimer(timeout);
 	}
 	return pcap_sendpacket(hPcap, sendPacket, 548);
@@ -538,22 +538,22 @@ static int sendChallengePacket()
 		sendPacket[0x13] = capBuf[0x13];
 		sendPacket[0x16] = 0x04;
 		sendPacket[0x17] = 16;
-		memcpy(sendPacket+0x18, checkPass(capBuf[0x13], capBuf+0x18, capBuf[0x17]), 16);
-		memcpy(sendPacket+0x28, userName, nameLen);
+		memcpy(sendPacket + 0x18, checkPass(capBuf[0x13], capBuf+0x18, capBuf[0x17]), 16);
+		memcpy(sendPacket + 0x28, userName, nameLen);
 
-		memcpy(sendPacket+0x28+nameLen, pkt_md5, sizeof(pkt3));
+		memcpy(sendPacket + 0x28 + nameLen, pkt_md5, sizeof(pkt3));
 
 		if(sendPacketCount % 2 == 0)
 		{
-			memcpy(sendPacket + 0x39, encodeIP(ip), 0x04);	//fill IP
-			memcpy(sendPacket + 0x3d, encodeIP(mask), 0x04);	//fill mask
-			memcpy(sendPacket + 0x41, encodeIP(gateway), 0x04); //fill gateway
+			memcpy(sendPacket + 0x2d + nameLen, encodeIP(ip), 0x04);	//fill IP
+			memcpy(sendPacket + 0x31 + nameLen, encodeIP(mask), 0x04);	//fill mask
+			memcpy(sendPacket + 0x35 + nameLen, encodeIP(gateway), 0x04); //fill gateway
 		}
 
-		memcpy(sendPacket + 0x8e, localMAC, 0x06);                //fill MAC
+		memcpy(sendPacket + 0x82 + nameLen, localMAC, 0x06);                //fill MAC
 
-		memcpy(sendPacket + 0x9c, computePwd(capBuf+0x18), 0x10);
-		memcpy(sendPacket + 0x114, computeV4(capBuf+0x18, capBuf[0x17]), 0x80);
+		memcpy(sendPacket + 0x90 + nameLen, computePwd(capBuf+0x18), 0x10);
+		memcpy(sendPacket + 0x108 + nameLen, computeV4(capBuf+0x18, capBuf[0x17]), 0x80);
 		setTimer(timeout);
 	}
 	return pcap_sendpacket(hPcap, sendPacket, 581);
