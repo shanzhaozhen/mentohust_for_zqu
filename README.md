@@ -1,4 +1,4 @@
-### mentohust_for_zqu
+# mentohust_for_zqu
 
   这是一个针对肇庆学院制作的一个锐捷认证客户端的项目，里面实现了锐捷的v3（v4）算法的认证。
   这个工程的原项目是由hyrathb写的，原地址是https://github.com/hyrathb/mentohust
